@@ -1,87 +1,41 @@
 package br.com.primeira_api.garagem.controllers.dto;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
+import br.com.primeira_api.garagem.modelo.enums.Marcas;
+import br.com.primeira_api.garagem.modelo.enums.StatusSituacao;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.math.BigDecimal;
 
-import br.com.primeira_api.garagem.modelo.Carro;
-import br.com.primeira_api.garagem.modelo.enums.Marcas;
-import br.com.primeira_api.garagem.modelo.enums.StatusSituacao;
-
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CarroDto {
-	
-	@Id 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id;
-	private String modelo;
-	private String cor;
-	private Integer ano;
-	private BigDecimal valorCompra = new BigDecimal(2);
-	private BigDecimal valorVenda = new BigDecimal(2);
-	private BigDecimal lucro = new BigDecimal(2);
-	
-	@Enumerated(EnumType.STRING)
-	private Marcas marca;
-	
-	@Enumerated(EnumType.STRING)
-	private StatusSituacao situacao;
-	
-	public CarroDto(Carro carro) {
-		this.id = carro.getId();
-		this.modelo = carro.getModelo();
-		this.cor = carro.getCor();
-		this.ano = carro.getAno();
-		this.valorCompra = carro.getValorCompra();
-		this.valorVenda = carro.getValorVenda();
-		this.marca = carro.getMarca();
-		this.situacao = carro.getSituacao();
-		this.lucro = carro.getValorVenda().subtract(valorCompra);
-		}
 
-	public Long getId() {
-		return id;
-	}
+    private Long id;
 
-	public String getModelo() {
-		return modelo;
-	}
+    private String modelo;
 
-	public String getCor() {
-		return cor;
-	}
+    private String cor;
 
-	public Integer getAno() {
-		return ano;
-	}
+    private Integer ano;
 
-	public BigDecimal getValorCompra() {
-		return valorCompra;
-	}
+    private Double valorCompra;
 
-	public BigDecimal getValorVenda() {
-		return valorVenda;
-	}
+    private Double valorVenda;
 
-	public BigDecimal getLucro() {
-		return lucro;
-	}
+    private Double lucro;
 
-	public Marcas getMarca() {
-		return marca;
-	}
+    private Marcas marca;
 
-	public StatusSituacao getSituacao() {
-		return situacao;
-	}
-	
-	public static List<CarroDto> converter(List<Carro> carros) {
-		return carros.stream().map(CarroDto::new).collect(Collectors.toList());
-	}
+    @Enumerated(EnumType.STRING)
+    private StatusSituacao situacao;
 
 }
